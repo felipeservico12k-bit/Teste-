@@ -9,10 +9,11 @@
   --linha: #c0392b;
   --aviso-fundo: #fff4d6;
   --aviso-borda: #e8c768;
+  --listras: rgba(176, 125, 43, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --fundo: #171614;
     --superficie: #22201d;
     --texto: #f1ede7;
@@ -23,7 +24,24 @@
     --linha: #ff6b5b;
     --aviso-fundo: #3a3019;
     --aviso-borda: #7a6326;
+    --listras: rgba(217, 165, 74, 0.12);
+    color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --fundo: #171614;
+  --superficie: #22201d;
+  --texto: #f1ede7;
+  --texto-suave: #a8a198;
+  --borda: #3a3631;
+  --destaque: #d9a54a;
+  --destaque-texto: #1a1408;
+  --linha: #ff6b5b;
+  --aviso-fundo: #3a3019;
+  --aviso-borda: #7a6326;
+  --listras: rgba(217, 165, 74, 0.12);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -39,7 +57,8 @@ body {
 header, main, footer, .abas {
   max-width: 640px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 
 header { padding-top: 24px; }
@@ -107,7 +126,7 @@ button.link {
 .cartao {
   border: 2px solid var(--destaque);
   border-radius: 3.18mm; /* sobrescrito pelo JS */
-  background: repeating-linear-gradient(45deg, transparent 0 10px, rgba(176,125,43,.08) 10px 20px);
+  background: repeating-linear-gradient(45deg, transparent 0 10px, var(--listras) 10px 20px);
   display: flex;
   align-items: center;
   justify-content: center;
