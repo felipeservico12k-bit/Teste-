@@ -32,26 +32,31 @@
       <p>Cada tela tem um tamanho diferente. Encoste um cartão de crédito, débito ou
         de transporte (tamanho padrão) na tela, em pé, e ajuste o retângulo até ele
         ficar <strong>exatamente do tamanho do cartão</strong>.</p>
+      <p class="dica">O que importa é a <strong>largura</strong>: encaixe o cartão no topo do
+        retângulo e deixe as duas laterais baterem. Segure o cartão com uma mão e use os botões
+        <strong>−</strong> e <strong>+</strong> lá embaixo com a outra (pode manter apertado).</p>
 
       <div class="area-cartao">
         <div id="cartao" class="cartao"><span>Cartão</span></div>
       </div>
 
-      <div class="controle">
-        <button class="ajuste" data-alvo="cartao" data-passo="-1" aria-label="Diminuir">−</button>
-        <input id="slider-cartao" type="range" min="120" max="520" step="0.5" aria-label="Largura do cartão">
-        <button class="ajuste" data-alvo="cartao" data-passo="1" aria-label="Aumentar">+</button>
+      <div class="barra-fixa">
+        <div class="controle">
+          <button class="ajuste" data-alvo="cartao" data-passo="-1" aria-label="Diminuir">−</button>
+          <input id="slider-cartao" type="range" min="120" max="520" step="0.5" aria-label="Largura do cartão">
+          <button class="ajuste" data-alvo="cartao" data-passo="1" aria-label="Aumentar">+</button>
+        </div>
+        <button id="salvar-calibracao" class="principal">Pronto, está do tamanho do cartão</button>
+        <p id="msg-calibracao" class="msg" aria-live="polite"></p>
       </div>
-
-      <button id="salvar-calibracao" class="principal">Pronto, está do tamanho do cartão</button>
-      <p id="msg-calibracao" class="msg" aria-live="polite"></p>
     </section>
 
     <!-- 2a. Com anel -->
     <section id="anel" class="painel" role="tabpanel" hidden>
       <h2>Meça com um anel que já serve</h2>
       <p>Coloque o anel deitado sobre o círculo e ajuste até a linha ficar
-        <strong>encostada na parte de dentro</strong> do anel.</p>
+        <strong>encostada na parte de dentro</strong> do anel. Use os botões
+        <strong>−</strong> e <strong>+</strong> (pode manter apertado).</p>
 
       <div class="area-anel">
         <div id="circulo" class="circulo"></div>

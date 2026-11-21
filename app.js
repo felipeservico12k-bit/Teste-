@@ -116,13 +116,37 @@ function desenharAnel() {
 
 sliderAnel.addEventListener("input", desenharAnel);
 
-// Botões + e − para ajuste fino
+// Botões + e −: um toque ajusta um passo; mantendo apertado, continua ajustando.
+// Feito com pointer events para funcionar com uma mão segurando o cartão ou o anel na tela.
+function darPasso(botao) {
+  const slider = botao.dataset.alvo === "cartao" ? sliderCartao : sliderAnel;
+  const novo = parseFloat(slider.value) + parseFloat(botao.dataset.passo);
+  slider.value = String(Math.min(parseFloat(slider.max), Math.max(parseFloat(slider.min), novo)));
+  slider.dispatchEvent(new Event("input"));
+}
+
 document.querySelectorAll(".ajuste").forEach((b) => {
-  b.addEventListener("click", () => {
-    const slider = b.dataset.alvo === "cartao" ? sliderCartao : sliderAnel;
-    const novo = parseFloat(slider.value) + parseFloat(b.dataset.passo);
-    slider.value = String(Math.min(parseFloat(slider.max), Math.max(parseFloat(slider.min), novo)));
-    slider.dispatchEvent(new Event("input"));
+  let espera = null;
+  let repeticao = null;
+  const parar = () => {
+    clearTimeout(espera);
+    clearInterval(repeticao);
+  };
+
+  b.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    parar();
+    try { b.setPointerCapture(e.pointerId); } catch { /* opcional */ }
+    darPasso(b);
+    espera = setTimeout(() => {
+      repeticao = setInterval(() => darPasso(b), 60);
+    }, 400);
+  });
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach((tipo) => b.addEventListener(tipo, parar));
+  b.addEventListener("contextmenu", (e) => e.preventDefault());
+  // Teclado (Enter/Espaço) gera um clique sem ponteiro: detail === 0
+  b.addEventListener("click", (e) => {
+    if (e.detail === 0) darPasso(b);
   });
 });
 
