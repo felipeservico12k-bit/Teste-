@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medidor de Dedo</title>
+  <meta name="description" content="Descubra o tamanho do seu dedo e o número do seu anel usando a tela do celular.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Medidor de Dedo</h1>
+    <p class="subtitulo">Descubra o número do seu anel usando a tela</p>
+  </header>
+
+  <nav class="abas" role="tablist">
+    <button role="tab" data-aba="calibrar" aria-selected="true">1. Calibrar</button>
+    <button role="tab" data-aba="anel">2a. Com anel</button>
+    <button role="tab" data-aba="papel">2b. Com papel</button>
+    <button role="tab" data-aba="tabela">Tabela</button>
+  </nav>
+
+  <main>
+    <div id="aviso-calibracao" class="aviso" hidden>
+      A tela ainda não foi calibrada, então as medidas podem estar erradas.
+      <button class="link" data-ir="calibrar">Calibrar agora</button>
+    </div>
+
+    <!-- 1. Calibração -->
+    <section id="calibrar" class="painel" role="tabpanel">
+      <h2>Calibre a tela com um cartão</h2>
+      <p>Cada tela tem um tamanho diferente. Encoste um cartão de crédito, débito ou
+        de transporte (tamanho padrão) na tela, em pé, e ajuste o retângulo até ele
+        ficar <strong>exatamente do tamanho do cartão</strong>.</p>
+
+      <div class="area-cartao">
+        <div id="cartao" class="cartao"><span>Cartão</span></div>
+      </div>
+
+      <div class="controle">
+        <button class="ajuste" data-alvo="cartao" data-passo="-1" aria-label="Diminuir">−</button>
+        <input id="slider-cartao" type="range" min="120" max="520" step="0.5" aria-label="Largura do cartão">
+        <button class="ajuste" data-alvo="cartao" data-passo="1" aria-label="Aumentar">+</button>
+      </div>
+
+      <button id="salvar-calibracao" class="principal">Pronto, está do tamanho do cartão</button>
+      <p id="msg-calibracao" class="msg" aria-live="polite"></p>
+    </section>
+
+    <!-- 2a. Com anel -->
+    <section id="anel" class="painel" role="tabpanel" hidden>
+      <h2>Meça com um anel que já serve</h2>
+      <p>Coloque o anel deitado sobre o círculo e ajuste até a linha ficar
+        <strong>encostada na parte de dentro</strong> do anel.</p>
+
+      <div class="area-anel">
+        <div id="circulo" class="circulo"></div>
+      </div>
+
+      <div class="controle">
+        <button class="ajuste" data-alvo="anel" data-passo="-0.05" aria-label="Diminuir">−</button>
+        <input id="slider-anel" type="range" min="12" max="25" step="0.05" value="17" aria-label="Diâmetro interno do anel">
+        <button class="ajuste" data-alvo="anel" data-passo="0.05" aria-label="Aumentar">+</button>
+      </div>
+
+      <div id="resultado-anel" class="resultado" aria-live="polite"></div>
+    </section>
+
+    <!-- 2b. Com papel -->
+    <section id="papel" class="painel" role="tabpanel" hidden>
+      <h2>Meça com uma tira de papel ou barbante</h2>
+      <ol>
+        <li>Enrole uma tira fina de papel (ou barbante) na base do dedo, sem apertar.</li>
+        <li>Marque com caneta o ponto onde a ponta encontra o resto da tira.</li>
+        <li>Estique a tira sobre a régua abaixo (ou uma régua de verdade) e veja quantos milímetros deu.</li>
+      </ol>
+
+      <div class="regua-container">
+        <svg id="regua" role="img" aria-label="Régua em milímetros"></svg>
+      </div>
+      <p class="dica">Arraste a régua para os lados para ver o resto. Ela só fica certa depois da calibração.</p>
+
+      <label class="campo">
+        Comprimento da tira (mm)
+        <input id="entrada-circ" type="number" inputmode="decimal" min="35" max="90" step="0.5" placeholder="ex.: 54">
+      </label>
+
+      <div id="resultado-papel" class="resultado" aria-live="polite"></div>
+    </section>
+
+    <!-- Tabela -->
+    <section id="tabela" class="painel" role="tabpanel" hidden>
+      <h2>Tabela de tamanhos</h2>
+      <p>Medidas internas do anel. As tabelas podem variar um pouco entre joalherias,
+        então confirme com a loja antes de comprar.</p>
+      <div class="tabela-container">
+        <table>
+          <thead>
+            <tr><th>Aro (BR)</th><th>Circunf.</th><th>Diâmetro</th><th>EUA</th></tr>
+          </thead>
+          <tbody id="corpo-tabela"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Dicas: meça no fim do dia, quando o dedo está um pouco maior, e evite medir com
+      as mãos frias. Se ficar entre dois números, escolha o maior.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
